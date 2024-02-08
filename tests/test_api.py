@@ -3,9 +3,8 @@ import json
 import requests
 
 
-# Test API respsonse code, data type and number of elements
 class TestFlaskApp(unittest.TestCase):
-
+    # Test API respsonse code, data type and number of elements
     def test_get_first_chunk(self):
         response = requests.get("http://localhost:5000/read/first-chunk")
         self.assertIn(response.status_code, [200, 503])

@@ -4,9 +4,8 @@ from src.logger import Logger
 import os
 
 
-# Test if the logger is working correctly
 class TestLogger(unittest.TestCase):
-
+    # Test if the logger is working correctly
     def test_logger_creation(self):
         logger = Logger("logs/test.log").get_logger()
         self.assertIsInstance(logger, logging.Logger)
@@ -16,7 +15,6 @@ class TestLogger(unittest.TestCase):
     def test_logging(self):
         logger = Logger("logs/test.log").get_logger()
         logger.info("Test message")
-        # You might want to check if the log file contains the expected message
         with open("logs/test.log", "r") as file:
             log_content = file.read()
             self.assertIn("Test message", log_content)

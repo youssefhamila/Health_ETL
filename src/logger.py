@@ -2,8 +2,8 @@ import logging
 import sys
 
 
-# Class logger to generate log files and terminal printing
 class Logger:
+    # Class logger to generate log files and terminal printing
     def __init__(self, filename):
         self.filename = filename
         self.logger = logging.getLogger(filename)
