@@ -14,7 +14,7 @@ Welcome to the Project! This README will guide you through setting up the projec
 1. **Clone the Repository:**
    - Clone the project repository using Git:
      ```bash
-     git clone (https://github.com/youssefhamila/Health_ETL.git
+     git clone https://github.com/youssefhamila/Health_ETL.git
      ```
 
 2. **Open Terminal in Project Directory:**
