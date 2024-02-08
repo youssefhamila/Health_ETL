@@ -2,7 +2,7 @@ import unittest
 import pandas as pd
 import sys
 sys.path.append('src')
-from etl import transform
+from etl import ETLProcess
 
 
 class TestETL(unittest.TestCase):
@@ -16,7 +16,8 @@ class TestETL(unittest.TestCase):
         })
 
     def test_transform(self):
-        transformed_data = transform(self.test_df)
+        transformer = ETLProcess('postgresql://postgres:etl_test@localhost/health_db','sleep_health','logs/etl.log')
+        transformed_data = transformer.transform(self.test_df)
         self.assertEqual(transformed_data.shape, (1, 7))
         self.assertTrue('BMI' in transformed_data.columns)
         self.assertTrue('BMI category' in transformed_data.columns)
