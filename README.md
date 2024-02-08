@@ -59,3 +59,9 @@ Welcome to the Project! This README will guide you through setting up the projec
 - To run the unit tests, execute the following command:
   ```bash
   python -m unittest discover -s tests/
+
+## System diagram (AWS)
+<div align="center">
+  <img src="https://github.com/youssefhamila/Health_ETL/assets/84504249/1022a0ed-1183-4aac-8412-bc7ffdd31862" alt="Image">
+</div>
+
