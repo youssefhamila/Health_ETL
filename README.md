@@ -5,7 +5,7 @@ Welcome to the Project! This README will guide you through setting up the projec
 
 ## Prerequisites
 
-- Docker installed on your machine
+- Docker and docker compose installed on your machine
 - Python installed on your machine
 - Terminal or Command Prompt
 
