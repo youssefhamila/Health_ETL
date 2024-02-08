@@ -22,8 +22,14 @@ Welcome to the Project! This README will guide you through setting up the projec
      ```bash
      cd Health_ETL
      ```
+     
+3. **Create and activate a virtual environment:**
+     ```bash
+     python -m venv myenv
+     source myenv/bin/activate
+     ```
 
-3. **Install Requirements:**
+4. **Install Requirements:**
    - Run the following command to install Python dependencies from `requirements.txt`:
      ```bash
      pip install -r requirements.txt
@@ -40,7 +46,7 @@ Welcome to the Project! This README will guide you through setting up the projec
 2. **Run ETL Script:**
    - Run the ETL script using the following command:
      ```bash
-     python src/etl.py
+     python src/etl.py data/health_sleep1.csv data/health_sleep2.csv
      ```
 
 3. **Check Results:**
