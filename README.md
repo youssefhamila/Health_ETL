@@ -54,6 +54,11 @@ Welcome to the Project! This README will guide you through setting up the projec
 3. **Check Results:**
    - Open your web browser and navigate to [http://127.0.0.1:5000/read/first-chunk](http://127.0.0.1:5000/read/first-chunk) to check the results.
 
+4. **check logs:**
+    you can check logs under /logs
+    - /logs/etl.log : all treansformation/errors related the ETL
+    - /logs/flask_app.log : all requests/errors related the Flask app
+  
 ## Running Unit Tests
 
 - To run the unit tests, execute the following command:
