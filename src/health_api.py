@@ -5,22 +5,19 @@ from logger import Logger
 
 
 class HealthAPI(Flask):
-    def __init__(self, testing=False, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setup_routes()
-        self.setup_logger(testing)
+        self.setup_logger()
 
     def setup_routes(self):
         self.route('/read/first-chunk', methods=['GET'])(self.get_first_chunk)
 
     def setup_logger(self, testing):
-        if not testing:
-            self.etl_logger = Logger('logs/flask_app.log')
-            self.logger = self.etl_logger.get_logger()
-        else:
-            self.logger = None
+        self.etl_logger = Logger('logs/flask_app.log')
+        self.logger = self.etl_logger.get_logger()
 
-    # Function to fetch data from the database
+    # Fetch first 10 rows from the database
     def fetch_data_from_database(self):
         connection = psycopg2.connect(user=os.getenv("POSTGRES_USER"),
                                       password=os.getenv("POSTGRES_PASSWORD"),
@@ -35,12 +32,12 @@ class HealthAPI(Flask):
         connection.close()
         return column_names, data
 
-    # API endpoint to get the first chunk of data
+    # API endpoint
     def get_first_chunk(self):
         try:
             column_names, data = self.fetch_data_from_database()
             response_data = [{column_names[i]: value for i, value in enumerate(row)} for row in data]
-            self.logger.info('data collected')
+            self.logger.info('API request successful: 10 rows returned')
             return jsonify(response_data)
         except Exception as e:
             self.logger.error('Table {} not created: {}'.format(os.getenv("POSTGRES_DB"), e))

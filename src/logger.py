@@ -1,6 +1,8 @@
 import logging
+import sys
 
 
+# Class logger to generate log files and terminal printing
 class Logger:
     def __init__(self, filename):
         self.filename = filename
@@ -10,6 +12,9 @@ class Logger:
         file_handler = logging.FileHandler(filename)
         file_handler.setFormatter(formatter)
         self.logger.addHandler(file_handler)
+        stream_handler = logging.StreamHandler(sys.stdout)
+        stream_handler.setFormatter(formatter)
+        self.logger.addHandler(stream_handler)
 
     def get_logger(self):
         return self.logger

@@ -3,6 +3,7 @@ import json
 import requests
 
 
+# Test API respsonse code, data type and number of elements
 class TestFlaskApp(unittest.TestCase):
 
     def test_get_first_chunk(self):

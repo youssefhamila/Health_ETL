@@ -4,6 +4,7 @@ from src.logger import Logger
 import os
 
 
+# Test if the logger is working correctly
 class TestLogger(unittest.TestCase):
 
     def test_logger_creation(self):

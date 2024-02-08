@@ -5,6 +5,7 @@ sys.path.append('src')
 from etl import transform
 
 
+# test ETL transformations
 class TestETL(unittest.TestCase):
     def setUp(self):
         self.test_df = pd.DataFrame({
@@ -18,7 +19,7 @@ class TestETL(unittest.TestCase):
         transformed_data = transform(self.test_df)
         self.assertEqual(transformed_data.shape, (1, 7))
         self.assertTrue('BMI' in transformed_data.columns)
-        self.assertTrue('BMI category' in transformed_data.columns)
+        self.assertTrue('BMI_category' in transformed_data.columns)
         self.assertTrue('Sleep_quality' in transformed_data.columns)
         self.assertEqual(transformed_data['BMI'].iloc[0], 25.431315104166664)
         self.assertEqual(transformed_data['BMI category'].iloc[0], 'Overweight')

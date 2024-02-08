@@ -1,15 +1,17 @@
 import pandas as pd
 from sqlalchemy import create_engine, inspect
 from logger import Logger
+import sys
+
 
 # Configuration
 DATABASE_URI = 'postgresql://postgres:etl_test@localhost/health_db'
-CSV_FILES = ['data/health_sleep1.csv', 'data/health_sleep1.csv']
 TABLE_NAME = 'sleep_health'
 etl_logger = Logger('logs/etl.log')
 logger = etl_logger.get_logger()
 
 
+# Extract data from one or multiple csv files
 def extract(csv_files):
     logger.info("Loading data from {} datasets".format(len(csv_files)))
     dfs = []
@@ -25,6 +27,7 @@ def extract(csv_files):
     return pd.concat(dfs)
 
 
+# Returns BMI category based in calculated DMI and gender
 def categorize_bmi(gender, bmi):
     if gender == 'Male':
         if bmi < 18.5:
@@ -48,6 +51,7 @@ def categorize_bmi(gender, bmi):
         return 'Unknown'
 
 
+# define sleep quality based on  duration of sleep (hours)
 def categorize_sleep_quality(hours):
     if hours >= 7:
         return 'Good'
@@ -57,6 +61,7 @@ def categorize_sleep_quality(hours):
         return 'Poor'
 
 
+# Apply all transformation functions to the dataset
 def transform(df):
     logger.info("Transforming data")
     try:
@@ -64,19 +69,17 @@ def transform(df):
         logger.info("Column BMI added")
         df['BMI category'] = df.apply(lambda row: categorize_bmi(row['Gender'], row['BMI']), axis=1)
         logger.info("Column BMI category added")
-        df['Sleep_quality'] = df['Sleep Duration'].apply(categorize_sleep_quality)
+        df['Sleep quality'] = df['Sleep Duration'].apply(categorize_sleep_quality)
         logger.info("Column Sleep_quality added")
         return df.sort_index(axis=1)
     except Exception as e:
         logger.error("Error transforming data: {}".format(e))
 
 
+# Create table sleep_health in case it doesn't exist already
 def create_table(engine, table_name, data):
-    # Create a SQLAlchemy inspector
     inspector = inspect(engine)
-    # Check if table exists
     if table_name not in inspector.get_table_names():
-        # If table does not exist, create it
         try:
             data.head(0).to_sql(table_name, engine, if_exists='replace', index=False)
             logger.info(f"Table '{table_name}' created.")
@@ -86,21 +89,20 @@ def create_table(engine, table_name, data):
         logger.info(f"Table '{table_name}' already exists.")
 
 
+# insert data into the database
 def insert_data(data, table_name, db_uri):
     engine = create_engine(db_uri)
-    # Create table if it doesn't exist
     create_table(engine, table_name, data)
-    # Load data into the table
     try:
         data.to_sql(table_name, engine, if_exists='append', index=False)
-        logger.info("Data inserted successfully.")
+        logger.info("Inserted {} rows into '{}' successfully.".format(len(data), table_name))
     except Exception as e:
         logger.error("Error loading data into '{}': {}".format(table_name, e))
 
 
-def main():
+def main(csv_files):
     try:
-        data = extract(CSV_FILES)
+        data = extract(csv_files)
         transformed_data = transform(data)
         insert_data(transformed_data, TABLE_NAME, DATABASE_URI)
     except Exception as e:
@@ -108,4 +110,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) < 2:
+        print("Datasets missing: python script_name.py file1.csv file2.csv")
+        sys.exit(1)
+    csv_files = sys.argv[1:]
+    main(csv_files)
