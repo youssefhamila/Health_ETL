@@ -67,7 +67,7 @@ Welcome to the Project! This README will guide you through setting up the projec
 
 ## System diagram (AWS)
 <div align="center">
-  <img src="[https://github.com/youssefhamila/Health_ETL/assets/84504249/13ee99d5-03e7-45b4-86ff-32737f6c3bdd](https://github.com/youssefhamila/Health_ETL/assets/84504249/046dc7ab-786c-46bf-a16e-d11d1c523eaa)https://github.com/youssefhamila/Health_ETL/assets/84504249/046dc7ab-786c-46bf-a16e-d11d1c523eaa" alt="Image">
+  <img src="https://github.com/youssefhamila/Health_ETL/assets/84504249/13ee99d5-03e7-45b4-86ff-32737f6c3bdd" alt="Image">
 </div>
 
 
